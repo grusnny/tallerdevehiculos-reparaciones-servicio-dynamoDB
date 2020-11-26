@@ -8,6 +8,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = {"http://localhost:3000", "http://tallerdevehiculos.s3-website-us-east-1.amazonaws.com/"})
 @RestController
 @RequestMapping(value = "/repairs")
@@ -20,6 +22,10 @@ public class ReparacionesApplication {
     @GetMapping("/{rId}")
     public Repair GetRepair(@PathVariable String rId){
         return repository.findRepairById(rId);
+    }
+    @GetMapping("/licenseplate/{licenseplate}")
+    public List<Repair> GetRepairByLicensePlate(@PathVariable String licenseplate){
+        return repository.findRepairByPlate(licenseplate);
     }
     @PostMapping
     public Repair PostVehicle(@RequestBody Repair repair){

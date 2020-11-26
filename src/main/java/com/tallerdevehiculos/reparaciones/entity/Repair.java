@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
-
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -20,19 +20,23 @@ public class Repair implements Serializable{
     @DynamoDBHashKey(attributeName = "rId")
     private String rId;
     @DynamoDBAttribute
+    private String repairDate;
+    @DynamoDBAttribute
+    private String repairBy;
+    @DynamoDBAttribute
     private String licensePlateVehicle;
     @DynamoDBAttribute
     private String state;
     @DynamoDBAttribute
-    private String listStates;
+    private Set<String> listStates;
     @DynamoDBAttribute
-    private String spareParts;
+    private Set<String> spareParts;
     @DynamoDBAttribute
     private int cost;
     @DynamoDBAttribute
-    private int partsCost;
+    private Set<Integer> partsCost;
     @DynamoDBAttribute
-    private String otherCosts;
+    private int otherCosts;
     @DynamoDBAttribute
     private String inCharge;
 
@@ -42,6 +46,22 @@ public class Repair implements Serializable{
 
     public void setrId(String rId) {
         this.rId = rId;
+    }
+
+    public String getRepairDate() {
+        return repairDate;
+    }
+
+    public void setRepairDate(String repairDate) {
+        this.repairDate = repairDate;
+    }
+
+    public String getRepairBy() {
+        return repairBy;
+    }
+
+    public void setRepairBy(String repairBy) {
+        this.repairBy = repairBy;
     }
 
     public String getLicensePlateVehicle() {
@@ -60,19 +80,19 @@ public class Repair implements Serializable{
         this.state = state;
     }
 
-    public String getListStates() {
+    public Set<String> getListStates() {
         return listStates;
     }
 
-    public void setListStates(String listStates) {
+    public void setListStates(Set<String> listStates) {
         this.listStates = listStates;
     }
 
-    public String getSpareParts() {
+    public Set<String> getSpareParts() {
         return spareParts;
     }
 
-    public void setSpareParts(String spareParts) {
+    public void setSpareParts(Set<String> spareParts) {
         this.spareParts = spareParts;
     }
 
@@ -84,19 +104,19 @@ public class Repair implements Serializable{
         this.cost = cost;
     }
 
-    public int getPartsCost() {
+    public Set<Integer> getPartsCost() {
         return partsCost;
     }
 
-    public void setPartsCost(int partsCost) {
+    public void setPartsCost(Set<Integer> partsCost) {
         this.partsCost = partsCost;
     }
 
-    public String getOtherCosts() {
+    public int getOtherCosts() {
         return otherCosts;
     }
 
-    public void setOtherCosts(String otherCosts) {
+    public void setOtherCosts(int otherCosts) {
         this.otherCosts = otherCosts;
     }
 

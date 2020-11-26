@@ -1,9 +1,6 @@
 package com.tallerdevehiculos.reparaciones.repository;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 
@@ -12,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -30,6 +28,20 @@ public class RepairRepository {
 
     public PaginatedScanList<Repair> findAllVehicles() {
         return mapper.scan(Repair.class, new DynamoDBScanExpression());
+    }
+
+    public List<Repair> findRepairByPlate (String licensePlateVehicle){
+
+        HashMap<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        eav.put(":v1", new AttributeValue().withS(licensePlateVehicle));
+
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("licensePlateVehicle = :v1")
+                .withExpressionAttributeValues(eav);
+
+        List<Repair> replies =  mapper.scan(Repair.class, scanExpression);
+
+        return replies;
     }
 
     public  String deleteRepair  (Repair  repair ){
